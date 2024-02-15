@@ -1,0 +1,60 @@
+stages:
+    - build
+    - dependencies
+    - lint
+
+variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+cache:
+    -   key:
+            files:
+                - composer.lock
+        paths:
+            - vendor/
+    -   key:
+            files:
+                - tools/php-cs-fixer/composer.lock
+        paths:
+            - tools/php-cs-fixer/vendor/
+
+docker:
+    stage: build
+    image: docker
+    services:
+        - docker:dind
+    tags:
+        - gitlab-org-docker
+    before_script:
+        - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    script:
+        - docker buildx create --driver=docker-container --name=buildkit-builder --use
+        - docker buildx build
+            --tag $IMAGE_TAG
+            --cache-from=type=registry,ref=$CI_REGISTRY_IMAGE
+            --cache-to=type=registry,ref=$CI_REGISTRY_IMAGE
+            --provenance=false
+            --push
+            --target php_dev
+            .
+
+composer:
+    stage: dependencies
+    image: $IMAGE_TAG
+    script:
+        - composer install --no-scripts
+        - composer install --working-dir=tools/php-cs-fixer
+
+code-style:
+    stage: lint
+    image: $IMAGE_TAG
+    # rules:
+    #     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    script:
+        - ./tools/php-cs-fixer/run-ci.sh
+    artifacts:
+        reports:
+            codequality: php-cs-fixer.json
+        when: always

@@ -1,0 +1,50 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+/.idea
+
+### google-api ###
+googleSheetCredentials.json
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+public/tmp
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+# vscode http module *.http
+/.vscode
+.vscode_api.http
+.vscode/
+
+# Others
+.DS_Store
+.code-workspace
+.docker-sync/
+/public/uploads/
+
+# Python
+venv
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+arg=$*
+if [ -z "$arg" ]; then
+  docker-compose exec --user=www-data php bash
+else
+  docker-compose exec --user=www-data php bash -c "$arg"
+fi;

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+arg=$*
+docker-compose exec --user=root php bash -c "source /root/.bashrc && php vendor/bin/phpstan analyze $arg -c phpstan.neon"
