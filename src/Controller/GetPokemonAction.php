@@ -30,12 +30,12 @@ class GetPokemonAction extends AbstractController
             $i = 0;
             foreach ($p->getPokemonLvls() as $clvl){
                 foreach ($clvl->getMoves() as $move){
-                    $pokemon["moves"][$i]["Id"] = $move->getId();
-                    $pokemon["moves"][$i]["Name"] = $move->getName();
-                    $pokemon["moves"][$i]["Type"] = $move->getType();
-                    $pokemon["moves"][$i]["Power"] = $move->getPower();
-                    $pokemon["moves"][$i]["Accuracy"] = $move->getAccuracy();
-                    $pokemon["moves"][$i]["Pp"] = $move->getPp();
+                    $pokemon["moves"][$i]["id"] = $move->getId();
+                    $pokemon["moves"][$i]["name"] = $move->getName();
+                    $pokemon["moves"][$i]["type"] = $move->getType();
+                    $pokemon["moves"][$i]["power"] = $move->getPower();
+                    $pokemon["moves"][$i]["accuracy"] = $move->getAccuracy();
+                    $pokemon["moves"][$i]["pp"] = $move->getPp();
                     $i++;
                 }
             }
