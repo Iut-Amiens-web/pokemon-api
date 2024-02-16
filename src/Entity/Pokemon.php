@@ -3,13 +3,34 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Controller\GetPokemonAction;
+use App\Controller\PokemonController;
 use App\Repository\PokemonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\OpenApi\Model;
 
+#[ApiResource(
+    operations: [
+        new GetCollection(),
+        new Get(
+            uriTemplate: '/pokemon/details/{name}/{lvl}/',
+            uriVariables: [
+                'name' => "name"
+            ],
+            controller: GetPokemonAction::class,
+            openapi: new Model\Operation(
+                summary: "Retrieves a Pokemon resource with name and lvl.",
+            ),
+        ),
+    ],
+    order: ['status' => 'ASC', 'createdAt' => 'DESC'],
+    paginationClientItemsPerPage: true
+)]
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
-#[ApiResource]
 class Pokemon
 {
     #[ORM\Id]
