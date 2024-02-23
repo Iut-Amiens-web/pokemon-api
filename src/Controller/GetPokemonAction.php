@@ -24,6 +24,7 @@ class GetPokemonAction extends AbstractController
             $pokemon["speed"] = $p->getSpeed();
             $pokemon["img"] = $p->getImg();
             $pokemon["special"] = $p->getSpecial();
+            $pokemon["type"] = $p->getType();
             $pokemon["pp"] = $p->getPp();
             $pokemon["lvl"] = 100;
 
